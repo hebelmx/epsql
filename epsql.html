@@ -1,0 +1,275 @@
+<script type="text/javascript">
+    RED.nodes.registerType('epsql-CN',{
+        category: 'config',
+        defaults: {
+            name: {value:""},
+            driver: {value:""},
+            server: {value:""},
+            encyption:{value:true},
+            database: {value:""}
+        },
+        credentials: {
+            username: {type:"text"},
+            password: {type:"password"}
+        },
+        label: function() {
+            return this.name || "epsql-CN";
+        }
+    });
+</script>
+
+
+
+<script type="text/x-red" data-template-name="epsql-CN">
+
+    <div class="form-row">
+
+        <label for="node-config-input-name"><i class="icon-bookmark"></i> Name</label>
+
+        <input type="text" id="node-config-input-name" placeholder="Connection Name">
+
+    </div>
+
+    <div class="form-row">
+
+        <label for="node-config-input-server"><i class="icon-bookmark"></i> Server</label>
+
+        <input type="text" id="node-config-input-server" placeholder="Server name or IP">
+
+    </div>
+
+    <div class="form-row">
+
+        <label for="node-config-input-driver"><i class="icon-bookmark"></i> Driver</label>
+
+        <input type="text" id="node-config-input-driver" placeholder="driver name">
+
+    </div>
+
+    <div class="form-row">
+
+        <label for="node-config-input-username"><i class="fa fa-user"></i> Username</label>
+
+        <input type="text" id="node-config-input-username">
+
+    </div>
+
+    <div class="form-row">
+
+        <label for="node-config-input-password"><i class="fa fa-lock"></i> Password</label>
+
+        <input type="password" id="node-config-input-password">
+
+    </div>
+
+    <div class="form-row">
+
+        <label for="node-config-input-database"><i class="fa fa-user"></i> Database</label>
+
+        <input type="text" id="node-config-input-database">
+
+    </div>
+
+    <div class="form-row">
+
+        <label for="node-config-input-encyption"><i class="fa fa-user"></i> Use Encryption?</label>
+
+        <input type="checkbox" id="node-config-input-encyption">
+
+        <div class="form-tips">SQL Databases hosted on Azure will need this checked</div>
+
+    </div>
+
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('epsql',{
+        category: 'storage',
+        color: '#C0DEED',
+        defaults: {
+            epsqlCN: {type:"epsql-CN"},
+            name: {value:""},
+            query: {value: ""},
+            outField: {value:"payload"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "db.png",
+        label: function() {
+            return this.name||"epsql";
+        },
+      oneditprepare: function() {
+            /*var that = this;
+            $( "#node-input-outputs" ).spinner({
+                min:1
+            });*/
+            this.editor = RED.editor.createEditor({
+                id: 'node-input-query-editor',
+                mode: 'ace/mode/javascript',
+                value: $("#node-input-query").val(),
+                globals: {
+                    msg:true,
+                    context:true,
+                    RED: true,
+                    util: true,
+                    flow: true,
+                    global: true,
+                    console: true,
+                    Buffer: true,
+                    setTimeout: true,
+                    clearTimeout: true,
+                    setInterval: true,
+                    clearInterval: true
+                }
+            });
+            RED.library.create({
+                url:"storage", // where to get the data from
+                type:"storage", // the type of object the library is for
+                editor:this.editor, // the field name the main text body goes to
+                mode:"ace/mode/javascript",
+                fields:['name']
+            });
+            this.editor.focus();
+        },
+	oneditsave: function() {
+            var annot = this.editor.getSession().getAnnotations();
+            this.noerr = 0;
+            $("#node-input-noerr").val(0);
+            for (var k=0; k < annot.length; k++) {
+                //console.log(annot[k].type,":",annot[k].text, "on line", annot[k].row);
+                if (annot[k].type === "error") {
+                    $("#node-input-noerr").val(annot.length);
+                    this.noerr = annot.length;
+                }
+            }
+            $("#node-input-query").val(this.editor.getValue());
+            delete this.editor;
+        },
+        oneditresize: function(size) {
+            var rows = $("#dialog-form>div:not(.node-text-editor-row)");
+            var height = $("#dialog-form").height();
+            for (var i=0;i<rows.size();i++) {
+                height -= $(rows[i]).outerHeight(true);
+            }
+            var editorRow = $("#dialog-form>div.node-text-editor-row");
+            height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+            $(".node-text-editor").css("height",height+"px");
+            this.editor.resize();
+        }
+    });
+</script>
+
+
+
+<script type="text/x-red" data-template-name="epsql">
+
+    <div class="form-row">
+
+        <label for="node-input-epsqlCN"><i class="icon-tag"></i> Connection</label>
+
+        <input type="text" id="node-input-epsqlCN">
+
+    </div>
+
+    <div class="form-row">
+
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+
+        <input type="text" id="node-input-name" placeholder="Name">
+
+    </div>
+
+    <div class="form-row" style="margin-bottom: 0px;">
+
+        <label for="node-input-query" style="width: 100% !important;"><i class="fa fa-comments"></i> Query</label>
+
+        <input type="hidden" id="node-input-query" autofocus="autofocus">	
+
+    </div>
+
+    <div class="form-row node-text-editor-row">
+
+        <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-query-editor" ></div>
+
+    </div>
+
+    <div class="form-tips">Tip: You can uses the <i><a href="http://mustache.github.io/mustache.5.html" target="_new">mustache</a></i> format.</div>
+
+    <div class="form-row">
+
+        <label for="node-input-outField"><i class="fa fa-edit"></i> Result to</label>
+
+        msg.<input type="text" id="node-input-outField" placeholder="payload" style="width: 64%;">
+
+    </div>
+
+</script>
+
+
+
+<script type="text/x-red" data-help-name="epsql">
+
+    <p>Node for Node-RED to ODBC</p>
+
+    <h4>Query</h4>
+
+    <p>You can uses the <i><a href="http://mustache.github.io/mustache.5.html" target="_new">mustache</a></i> format.</br>
+
+    Example: <i>SELECT * FROM Test WHERE Name = {{{payload.name}}}</i></p>
+
+    Basado en contrib mssql
+    Se requiere un driver configurado
+    actualmente no se usa el server del campo, se usa el del driver
+    /etc/odbc.ini
+/etc/odbcinst.ini
+ejemplos:
+
+
+gedit /etc/odbc.ini
+
+[MSSQLTEST]  
+Driver = ODBC Driver 13 for SQL Server
+Server =  192.168.1.23,1434
+
+
+gedit /etc/odbcinst.ini
+
+[ODBC Driver 13 for SQL Server]
+Description=Microsoft ODBC Driver 13 for SQL Server
+Driver=/opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
+Threading=1
+UsageCount=3
+
+debe estar funcionando:
+isql -v MSSQLTEST sa sa
+
+se requiere
+sudo apt-get install -y unixodbc unixodbc-dev
+npm install -g --unsafe-perm odbc
+sudo apt-get install -y libgcrypt20-dev
+sudo apt-get install -y libssh2-1-dev
+
+wget https://download.microsoft.com/download/2/E/5/2E58F097-805C-4AB8-9FC6-71288AB4409D/msodbcsql-13.0.0.0.tar.gz
+
+tar -zxvf msodbcsql-13.0.0.0.tar.gz
+cd msodbcsql-13.0.0.0
+./install.sh verify
+./install.sh install --force
+
+
+
+
+
+
+
+
+    Abel Briones
+
+    <p><i><a href="http://www.exxerpro.com" target="_new">Exxerpro Solutions SA de CV</a></i></br><i></i></p>
+
+
+
+
+</script>

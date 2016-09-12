@@ -1,0 +1,114 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "node-red-contrib-epsql",
+        "scope": null,
+        "escapedName": "node-red-contrib-epsql",
+        "name": "node-red-contrib-epsql",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/root/.node-red"
+    ],
+    [
+      {
+        "raw": "node-red-contrib-epsql",
+        "scope": null,
+        "escapedName": "node-red-contrib-epsql",
+        "name": "node-red-contrib-epsql",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/root/.node-red"
+    ]
+  ],
+  "_from": "node-red-contrib-epsql",
+  "_id": "node-red-contrib-epsql@0.0.5",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/node-red-contrib-epsql",
+  "_nodeVersion": "6.5.0",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/node-red-contrib-epsql-0.0.5.tgz_1473693519199_0.43673847639001906"
+  },
+  "_npmUser": {
+    "name": "hebelmx",
+    "email": "hebelmx@gmail.com"
+  },
+  "_npmVersion": "3.10.7",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "node-red-contrib-epsql",
+    "scope": null,
+    "escapedName": "node-red-contrib-epsql",
+    "name": "node-red-contrib-epsql",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/node-red-contrib-epsql/-/node-red-contrib-epsql-0.0.5.tgz",
+  "_shasum": "7c3f15ef2d7a764c3fa3f79fa267be5377d5a700",
+  "_shrinkwrap": null,
+  "_spec": "node-red-contrib-epsql",
+  "_where": "/root/.node-red",
+  "author": {
+    "name": "Abel Briones",
+    "url": "http://www.exxerpro.com"
+  },
+  "bugs": {
+    "url": "https://github.com/hebelmx/epsql"
+  },
+  "dependencies": {
+    "mustache": "latest",
+    "odbc": ">=1.2.1"
+  },
+  "description": "Node for node-red to connect to a database using ODBC connection",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "7c3f15ef2d7a764c3fa3f79fa267be5377d5a700",
+    "tarball": "https://registry.npmjs.org/node-red-contrib-epsql/-/node-red-contrib-epsql-0.0.5.tgz"
+  },
+  "gitHead": "2128092d40102c12a136db3be5d6ae9189c25b3e",
+  "homepage": "http://www.exxerpro.com",
+  "keywords": [
+    "node-red",
+    "odbc",
+    "unixodbc",
+    "epsql",
+    "sql",
+    "Microsoft",
+    "database"
+  ],
+  "license": "MIT",
+  "main": "epsql.js",
+  "maintainers": [
+    {
+      "name": "hebelmx",
+      "email": "hebelmx@gmail.com"
+    }
+  ],
+  "name": "node-red-contrib-epsql",
+  "node-red": {
+    "nodes": {
+      "epsql": "epsql.js"
+    }
+  },
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hebelmx/epsql.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.5"
+}
