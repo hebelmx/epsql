@@ -1,5 +1,7 @@
 #node-red-contrib-epsql
 
+#sorry by the redaction, but i think everything is in here, somdey in the future i will work in the document!!
+
 the short version :
 
     npm install -g node-red-contrib-epsql
@@ -306,13 +308,14 @@ para instalar se requiere que este corriendo el node-red
 recomiendo monitorear los logs, ya sea desde la pagina del node-red (localhost:1880) o desde otra consola (pm2 logs node-red) para
 ver que esta haciendo y ver los mensajes de error
 
-finaly ::
+and finaly ::
 
 node-red-admin install node-red-contrib-epsql
 
 
     Abel Briones
     Exxerpro Solutions
-
+    www.exxerpro.com
+    
 
 Thanks to redant and redconnect-io, creator of https://github.com/redconnect-io/node-red-contrib-mssql - who's node this was based on.
