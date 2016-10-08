@@ -310,3 +310,9 @@ finaly ::
 
 node-red-admin install node-red-contrib-epsql
 
+
+    Abel Briones
+    Exxerpro Solutions
+
+
+Thanks to redant and redconnect-io, creator of https://github.com/redconnect-io/node-red-contrib-mssql - who's node this was based on.
