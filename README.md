@@ -28,8 +28,19 @@ reestart o logout, login
 	wajig install -y unixodbc unixodbc-dev
 	wajig install -y libgcrypt20 libgcrypt20-dev libgcrypt20-dbg
 	wajig install -y libssh2-1-dev libssl1.0.0 libssl-dev
-	wajig install -y libssl1.0.0 libssl-dev
-	wajig install -y libssl1.0.0 libssl-dev
+	
+O una por una:
+
+	wajig install -y libgcrypt20
+	wajig install -y libgcrypt20-dev 
+	wajig install -y libgcrypt20-dbg
+	wajig install -y libssh2-1-dev 
+	wajig install -y libssl1.0.0
+	wajig install -y libssl-dev
+
+Verificar que queden instaladas todas, al instalar el driver de microsoft busca estas librerias, pero no adivierte si ahi alguna ausente, simplemente falla, en ocasiones se instalara pero no quedara correctamente instalado
+
+Check all the libaries or you are goin in problems with the microsoft odbc driver
 
 
 verificar los locales, debe estar instalado el siguiente:
@@ -69,7 +80,7 @@ whith the downloaded file:
 	tar -zxvf msodbcsql-13.0.0.0.tar.gz
 	cd msodbcsql-13.0.0.0
 	./install.sh verify
-	sudo ./install.sh install --force --acept-license
+	sudo ./install.sh install --force --accept-license
 
 Verify your instalation
 Verificar la instalacion
