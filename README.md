@@ -11,8 +11,10 @@ or my favorite:
 
 
 #Long Version
+
 las instrucciones completas para la instalacion
-#Install esentials, some dependences y some tools
+
+Install esentials, some dependences y some tools
 
 	su root
 	nano /etc/apt/sources.list
@@ -75,6 +77,7 @@ Verificar la instalacion
 	sudo ldd /opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
 
 debe marcar que encontro todas las librerias, si falta alguna ahi que instalar las depedencias
+
 if there is a lib missing you have problems, google is your friend
 if it is missing some of this: libcrypto.so.10 or libssl.so.10 most likeli you have the wrong file check above.
 
@@ -122,14 +125,15 @@ cd ..
 	odbcinst -q -d -n "ODBC Driver 13 for SQL Server"
 
 Debe salir algo como esto
-Driver=/opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
-Threading=1
-UsageCount=1
 
-UsageCount puede variar
+	Driver=/opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
+	Threading=1
+	UsageCount=1
+
 
 
 another test just to be sure
+
 para verificar el driver
 
 	odbcinst -j
@@ -144,9 +148,8 @@ para verificar el driver
 	SQLSETPOSIROW Size.: 8
 
 
-# of course you want to try with a real dabase
+of course you want to try with a real database
  a les you have mssqlserver for linux, you must have to configure slq server for remote conection, in sql express another big problem
-
 
 
 ahi que configurar el acceso a MS SQL SERVER, algunos vinculos de utilidad y palabras claves
@@ -157,17 +160,17 @@ https://blogs.msdn.microsoft.com/walzenbach/2010/04/14/how-to-enable-remote-conn
 https://msdn.microsoft.com/en-us/library/cc646023.aspx
 
 som keyworks for google search
+
 sql server configuration manager
 
-netsh advfirewall firewall add rule name="MSSQL TCP" dir=in action=allow protocol=TCP localport=1434
-netsh advfirewall firewall add rule name="MSSQL UDP" dir=in action=allow protocol=UDP localport=1434
+	netsh advfirewall firewall add rule name="MSSQL TCP" dir=in action=allow protocol=TCP localport=1434
+	netsh advfirewall firewall add rule name="MSSQL UDP" dir=in action=allow protocol=UDP localport=1434
 
-netstat -ano | find /i "3564"
-netstat -ano | find /i "3564"
+	netstat -ano | find /i "3564"
+	netstat -ano | find /i "3564"
 
-NET STOP MSSQL$SQLEXPRESS
-
-NET START MSSQL$SQLEXPRESS
+	NET STOP MSSQL$SQLEXPRESS
+	NET START MSSQL$SQLEXPRESS
 
 
 #Ejemplos de configuracion
@@ -175,9 +178,10 @@ Primero configuramos el archio odbc.ini
 
 ejecutamos el siguiente comando:
 
-sudo nano /etc/odbc.ini
+	sudo nano /etc/odbc.ini
 
 vamos a editarlo con lo siguiente:
+
 the driver name must match exactly, 
 
 
@@ -224,33 +228,35 @@ now we can tray to connect
 
 be very carefull
 the remote conection in sql server must to be working, i recommended verify with a windows machine just to be sure
+
 tiene que entrar a la consola de isql
-se requiere que exista el servidor en la direccion congigurada y con
-el usuario y password configurados
-en caso cotnrario marcara timeout un error si no esta bien instalada
+se requiere que exista el servidor en la direccion congigurada y con el usuario y password configurados
+en caso contrario marcara timeout o otro error si no esta bien instalada
 
 en caso de encontrar el siguiente error
-[unixODBC][Driver Manager]Can't open lib '/opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0' : file not found (0)
+	
+	[unixODBC][Driver Manager]Can't open lib '/opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0' : file not found (0)
 
 see the above comment about the 3 version of the driver (no counting windows version )
 of course the file exist, is one of the librariis what is missing
 
 para verificar la instalacion
 
-ldd /opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
+	ldd /opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
 
 
 
 
-#para instalar el nodeJS, si no esta instalado aun
+para instalar el nodeJS, si no esta instalado aun
 Installing node.js in case is not installed yet
 
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-wajig install -y nodejs
+	curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+	wajig install -y nodejs
 
 Opcional
 para probar la conexion con la base de datos en node.js
-nano s.js
+	
+	nano s.js
 
 	var odbc = require("odbc");
 	var connectionString = "DSN=MSSQLTEST;UID=sa;PWD=sa;DATABASE=Produccion";
