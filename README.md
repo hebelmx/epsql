@@ -1,42 +1,41 @@
 #node-red-contrib-epsql
 
-#sorry by the redaction, but i think everything is in here, somdey in the future i will work in the document!!
+sorry by the redaction, but i think everything is in here, somdey in the future i will work in the document!!
 
 the short version :
 
-    npm install -g node-red-contrib-epsql
+    	npm install -g node-red-contrib-epsql
 or my favorite:
-    node-red-admin install node-red-contrib-epsql
+
+	node-red-admin install node-red-contrib-epsql
 
 
-#las instrucciones completas para la instalacion
-#Complet instruccions
-
+#Long Version
+las instrucciones completas para la instalacion
 #Install esentials, some dependences y some tools
 
-su root
-nano /etc/apt/sources.list
-apt-get update && apt-get upgrade
-apt-get install -y sudo wajig  build-essential curl
-usermod -a -G sudo user
-exit
+	su root
+	nano /etc/apt/sources.list
+	apt-get update && apt-get upgrade
+	apt-get install -y sudo wajig  build-essential curl
+	usermod -a -G sudo user
+	exit
 
 reestart o logout, login 
 
-wajig install -y unixodbc unixodbc-dev
-wajig install -y libgcrypt20 libgcrypt20-dev libgcrypt20-dbg
-wajig install -y libssh2-1-dev libssl1.0.0 libssl-dev
-wajig install -y libssl1.0.0 libssl-dev
-wajig install -y libssl1.0.0 libssl-dev
+	wajig install -y unixodbc unixodbc-dev
+	wajig install -y libgcrypt20 libgcrypt20-dev libgcrypt20-dbg
+	wajig install -y libssh2-1-dev libssl1.0.0 libssl-dev
+	wajig install -y libssl1.0.0 libssl-dev
+	wajig install -y libssl1.0.0 libssl-dev
 
 
-#verificar los locales, debe estar instalado el siguiente:
-#si no esta este idioma instalado no compila
-#the driver need en_us.utf-8 as locals !!, is very importante
+verificar los locales, debe estar instalado el siguiente:
+si no esta este idioma instalado no compila
+the driver need en_us.utf-8 as locals !!, is very importante
+verificar en_us.utf-8 utf-8
 
-
-sudo dpkg-reconfigure locales
-#verificar en_us.utf-8 utf-8
+	sudo dpkg-reconfigure locales
 
 
 Bajar el driver correspondiente
@@ -49,35 +48,38 @@ https://msdn.microsoft.com/library/mt703139.aspx
 
 redhat
 https://www.microsoft.com/en-us/download/details.aspx?id=36437
-https://download.microsoft.com/download/B/C/D/BCDD264C-7517-4B7D-8159-C99FC5535680/msodbcsql-13.0.0.0.tar.gz
+	
+	wget https://download.microsoft.com/download/B/C/D/BCDD264C-7517-4B7D-8159-C99FC5535680/msodbcsql-13.0.0.0.tar.gz
 
 suse linux 
 https://www.microsoft.com/en-us/download/details.aspx?id=34687
-wget https://download.microsoft.com/download/7/3/1/7318E2AD-E7C5-4301-AEFA-A15EDEDACFB4/msodbcsql-13.0.0.0.tar.gz
+	
+	wget https://download.microsoft.com/download/7/3/1/7318E2AD-E7C5-4301-AEFA-A15EDEDACFB4/msodbcsql-13.0.0.0.tar.gz
 
 ubuntu debian
 https://www.microsoft.com/en-us/download/details.aspx?id=50419
-wget https://download.microsoft.com/download/2/E/5/2E58F097-805C-4AB8-9FC6-71288AB4409D/msodbcsql-13.0.0.0.tar.gz
+	
+	wget https://download.microsoft.com/download/2/E/5/2E58F097-805C-4AB8-9FC6-71288AB4409D/msodbcsql-13.0.0.0.tar.gz
 
 
-whit the downloaded file:
+whith the downloaded file:
 
-tar -zxvf msodbcsql-13.0.0.0.tar.gz
-cd msodbcsql-13.0.0.0
-./install.sh verify
-sudo ./install.sh install --force --acept-license
+	tar -zxvf msodbcsql-13.0.0.0.tar.gz
+	cd msodbcsql-13.0.0.0
+	./install.sh verify
+	sudo ./install.sh install --force --acept-license
 
 Verify your instalation
 Verificar la instalacion
 
-sudo ldd /opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
+	sudo ldd /opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
 
 debe marcar que encontro todas las librerias, si falta alguna ahi que instalar las depedencias
 if there is a lib missing you have problems, google is your friend
-if it is missing some of this: libcrypto.so.10 or libssl.so.10 most like you have the wrong file check above.
+if it is missing some of this: libcrypto.so.10 or libssl.so.10 most likeli you have the wrong file check above.
 
 
-exxerpro@EPDB100:~$ ldd /opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0 
+	ldd /opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0 
 	linux-vdso.so.1 (0x00007fff7fdde000)
 	libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f53ffbb4000)
 	libodbcinst.so.2 => /usr/lib/x86_64-linux-gnu/libodbcinst.so.2 (0x00007f53ff9a2000)
@@ -115,42 +117,41 @@ exxerpro@EPDB100:~$ ldd /opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
 
 Verificar nuevamente
 
-
 cd ..
-odbcinst -q -d -n "ODBC Driver 13 for SQL Server"
+	
+	odbcinst -q -d -n "ODBC Driver 13 for SQL Server"
 
-# Debe salir algo como esto
-#Driver=/opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
-#Threading=1
-#UsageCount=1
+Debe salir algo como esto
+Driver=/opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
+Threading=1
+UsageCount=1
 
-##
-#UsageCount puede variar
-#
+UsageCount puede variar
 
-#another test just to be sure
-#para verificar el driver
-odbcinst -j
 
-$ odbcinst -j
-unixODBC 2.3.1
-DRIVERS............: /etc/odbcinst.ini
-SYSTEM DATA SOURCES: /etc/odbc.ini
-FILE DATA SOURCES..: /etc/ODBCDataSources
-USER DATA SOURCES..: /home/exxerpro/.odbc.ini
-SQLULEN Size.......: 8
-SQLLEN Size........: 8
-SQLSETPOSIROW Size.: 8
+another test just to be sure
+para verificar el driver
 
+	odbcinst -j
+
+	unixODBC 2.3.1
+	DRIVERS............: /etc/odbcinst.ini
+	SYSTEM DATA SOURCES: /etc/odbc.ini
+	FILE DATA SOURCES..: /etc/ODBCDataSources
+	USER DATA SOURCES..: /home/exxerpro/.odbc.ini
+	SQLULEN Size.......: 8
+	SQLLEN Size........: 8
+	SQLSETPOSIROW Size.: 8
 
 
 # of course you want to try with a real dabase
-# a les you have mssqlserver for linux, you must to configure slq server for remote conection, in sql express another big problem
+ a les you have mssqlserver for linux, you must have to configure slq server for remote conection, in sql express another big problem
 
 
-##############
-# en windows para configurar el acceso a SQL, algunos vinculos de utilidad y palabras claves
-# Some useful links and keyword 
+
+ahi que configurar el acceso a MS SQL SERVER, algunos vinculos de utilidad y palabras claves
+Some useful links and keyword 
+
 https://blogs.msdn.microsoft.com/walzenbach/2010/04/14/how-to-enable-remote-connections-in-sql-server-2008/
 
 https://msdn.microsoft.com/en-us/library/cc646023.aspx
@@ -167,150 +168,152 @@ netstat -ano | find /i "3564"
 NET STOP MSSQL$SQLEXPRESS
 
 NET START MSSQL$SQLEXPRESS
-##############
 
 
 #Ejemplos de configuracion
-#Primero configuramos el archio odbc.ini
+Primero configuramos el archio odbc.ini
 
 ejecutamos el siguiente comando:
 
 sudo nano /etc/odbc.ini
 
-#vamos a editarlo con lo siguiente:
-the driver name exactly, 
-the server and port,
+vamos a editarlo con lo siguiente:
+the driver name must match exactly, 
+
 
 Muy importante
-este es el servidro que usaremos en node-red, el de la configuracion actualmente no le hace caso!!!
+este es el servidor que usaremos en node-red, el de la configuracion actualmente no le hace caso!!!
 
-Very important 
+Very important
 the server configured en node-red-controb-epsql is ignored, this is the real server to make the connection
 
 
-[MSSQLTEST]  
-Driver = ODBC Driver 13 for SQL Server
-Server =  192.168.1.23,1434
-# 
-# EXAMPLE
-# Server = tcp:servername,12345.
-#  
-# Note:  
-# Port is not a valid keyword in the ~/.odbc.ini file  
-# for the Microsoft ODBC driver on Linux  
-#  
-#
-#Encryption = Yes
+	[MSSQLTEST]  
+	Driver = ODBC Driver 13 for SQL Server
+	Server =  192.168.1.23,1434
+	# 
+	# EXAMPLE
+	# Server = tcp:servername,12345.
+	#  
+	# Note:  
+	# Port is not a valid keyword in the ~/.odbc.ini file  
+	# for the Microsoft ODBC driver on Linux  
+	#  
+	#
+	#Encryption = Yes
 
 
-#El siguiente archivo ya debe estar configurado si se instalo bien el driver
-#the next file, must to be like this:
+El siguiente archivo ya debe estar configurado si se instalo bien el driver
+the next file, must to be like this:
 
-sudo nano /etc/odbcinst.ini
+	sudo nano /etc/odbcinst.ini
 
-#[ODBC Driver 13 for SQL Server]
-#Description=Microsoft ODBC Driver 13 for SQL Server
-#Driver=/opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
-#Threading=1
-#UsageCount=3
+	[ODBC Driver 13 for SQL Server]
+	Description=Microsoft ODBC Driver 13 for SQL Server
+	Driver=/opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
+	Threading=1
+	UsageCount=3
 
 
 
-#Para probar una base de datos
-#now we can tray to connect
+Para probar una base de datos
+now we can tray to connect
 
-# isql -v "odbc driver" "user" "pwd"
-isql -v MSSQLTEST sa sa
+	isql -v "odbc driver" "user" "pwd"
+	isql -v MSSQLTEST sa sa
 
 be very carefull
-the remote conection in sql server must to be working, i recommended verify with a windows machine jus to be sure
-#tiene que entrar a la consola de isql
-#se requiere que exista el servidor en la direccion congigurada y con
-#el usuario y password configurados
-#en caso cotnrario marcara timeout un error si no esta bien instalada
+the remote conection in sql server must to be working, i recommended verify with a windows machine just to be sure
+tiene que entrar a la consola de isql
+se requiere que exista el servidor en la direccion congigurada y con
+el usuario y password configurados
+en caso cotnrario marcara timeout un error si no esta bien instalada
 
 en caso de encontrar el siguiente error
 [unixODBC][Driver Manager]Can't open lib '/opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0' : file not found (0)
 
-se the above comment about the 3 version of the driver (no counting windows version )
+see the above comment about the 3 version of the driver (no counting windows version )
 of course the file exist, is one of the librariis what is missing
-# para verificar la instalacion
+
+para verificar la instalacion
 
 ldd /opt/microsoft/msodbcsql/lib64/libmsodbcsql-13.0.so.0.0
 
 
 
 
-#para instalar el nodeJS
-# in case is not installed yet
+#para instalar el nodeJS, si no esta instalado aun
+Installing node.js in case is not installed yet
 
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 wajig install -y nodejs
 
-##############
-
-#para probar la conexion con la base de datos en node.js
+Opcional
+para probar la conexion con la base de datos en node.js
 nano s.js
 
-var odbc = require("odbc");
-var connectionString = "DSN=MSSQLTEST;UID=sa;PWD=sa;DATABASE=Produccion";
-var db = new odbc.Database();
-	db.open(connectionString, function(err){
+	var odbc = require("odbc");
+	var connectionString = "DSN=MSSQLTEST;UID=sa;PWD=sa;DATABASE=Produccion";
+	var db = new odbc.Database();
+		db.open(connectionString, function(err){
 
-		if(err){
-			throw err;
-		};
-
-		/*
-			Once the connection is open you can query it.
-			That means if you tried to query it outside or before this handler finished, it would say...
-			"Connection Not Open"
-		*/
-
-		db.query("SELECT * FROM contador", function(err, rows, moreResultSets){
 			if(err){
-				console.log(err.message);
+				throw err;
 			};
-			console.log(rows);
+
+			/*
+				Once the connection is open you can query it.
+				That means if you tried to query it outside or before this handler finished, it would say...
+				"Connection Not Open"
+			*/
+
+			db.query("SELECT * FROM contador", function(err, rows, moreResultSets){
+				if(err){
+					console.log(err.message);
+				};
+				console.log(rows);
+			});
+
 		});
 
+	process.on('SIGINT', function () {
+		db.close(function(){
+			console.log('Database Connection Closed');
+			process.exit();
+		});
 	});
 
-process.on('SIGINT', function () {
-	db.close(function(){
-		console.log('Database Connection Closed');
-		process.exit();
-	});
-});
+	node s.js
+	
+you must se the results in the console
+be free to write your own query
 
-node s.js
-# you must se the results in here!!
-# be free to write your own query
+Para instalar node-red
+instalar como sudo por que requiere permisos de acceos a /usr/lib
 
-//Para instalar node-red
-instalar con por que requiere permisos de acceos a /usr/lib
+	sudo npm install -g --unsafe-perm node-red
+	sudo npm install -g --unsafe-perm pm2
+	sudo npm install -g --unsafe-perm node-red-admin
 
-sudo npm install -g --unsafe-perm node-red
-sudo npm install -g --unsafe-perm pm2
-sudo npm install -g --unsafe-perm node-red-admin
+Now you can start node-red
 
+	pm2 start node-red
 
-pm2 start node-red
+You can verify the running process with this:
 
-pm2 info node-red
-pm2 logs node-red
+	pm2 info node-red
+	pm2 logs node-red
 
 
-#el nodo no verifica los prerequisitos fuera de node-red
-#se requiere el driver de microsoft
+#Finally 
 
-para instalar se requiere que este corriendo el node-red
-recomiendo monitorear los logs, ya sea desde la pagina del node-red (localhost:1880) o desde otra consola (pm2 logs node-red) para
-ver que esta haciendo y ver los mensajes de error
+para instalarlo se requiere que este corriendo el node-red
+recomiendo monitorear los logs, ya sea desde la pagina del node-red (localhost:1880) o desde otra consola (pm2 logs node-red) para ver que esta haciendo y ver los mensajes de error
 
-and finaly ::
 
-node-red-admin install node-red-contrib-epsql
+	npm install -g node-red-contrib-epsql
+	
+	node-red-admin install node-red-contrib-epsql
 
 
     Abel Briones
