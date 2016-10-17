@@ -14,6 +14,8 @@ or my favorite:
 
 las instrucciones completas para la instalacion
 
+Tested in vanilla debian 8.6 
+
 Install esentials, some dependences y some tools
 
 	su root
@@ -127,6 +129,13 @@ if it is missing some of this: libcrypto.so.10 or libssl.so.10 most likeli you h
 	libgmp.so.10 => /usr/lib/x86_64-linux-gnu/libgmp.so.10 (0x00007f53fb80e000)
 	libffi.so.6 => /usr/lib/x86_64-linux-gnu/libffi.so.6 (0x00007f53fb606000)
 
+in some cases we have newer libraries for openssl, but we can install some olders libs from here:
+
+	http://security.debian.org/pool/updates/main/o/openssl/
+	
+	wget http://security.debian.org/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u5_amd64.deb
+	sudo dpkg -i libssl1.0.0_1.0.1e-2+deb7u20_ia64.deb
+	 
 
 
 Verificar nuevamente
