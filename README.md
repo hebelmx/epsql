@@ -61,6 +61,12 @@ there is a lot of confusion because there are three almost identical drivers, be
 Driver microsoft
 https://msdn.microsoft.com/library/mt703139.aspx
 
+this links belows are not working anymore, you can find the new instructions in here:
+
+https://www.microsoft.com/en-us/download/details.aspx?id=50420
+
+i have the debian installer, but i dont know if i am allowed to redist! :(
+
 redhat
 https://www.microsoft.com/en-us/download/details.aspx?id=36437
 	
